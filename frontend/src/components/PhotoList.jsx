@@ -1,6 +1,7 @@
 import React from "react";
 
 import "../styles/PhotoList.scss";
+import PhotoListItem from "./PhotoListItem";
 
 const sampleDataForPhotoList = [
   {
@@ -56,10 +57,13 @@ const sampleDataForPhotoList = [
   },
 ];
 
+//loop through the sampleDataForPhotoList array and render a PhotoListItem component for each item in the array
 const PhotoList = () => {
   return (
     <ul className="photo-list">
-      {/* Insert React */}
+      {sampleDataForPhotoList.map((photoData, index) => (
+        <PhotoListItem key={index} sampleData={photoData} />
+      ))}
     </ul>
   );
 };

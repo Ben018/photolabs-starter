@@ -5,11 +5,11 @@ import PhotoListItem from "./PhotoListItem";
 
 //loop through the sampleDataForPhotoList array and render a PhotoListItem component for each item in the array
 const PhotoList = (props) => {
-  const { photosData } = props;
+  const { photosData, favourite, setFavourite } = props;
   return (
     <ul className="photo-list">
       {photosData.map((photoData, index) => (
-        <PhotoListItem key={index} photosData={photoData} />
+        <PhotoListItem key={index} photosData={photoData} favourite={favourite} setFavourite={setFavourite} />
       ))}
     </ul>
   );

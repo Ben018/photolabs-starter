@@ -3,15 +3,17 @@ import React, { useCallback, useState } from 'react';
 import FavIcon from './FavIcon';
 import '../styles/PhotoFavButton.scss';
 
-
-function PhotoFavButton() {
+function PhotoFavButton(props) {
+  const { favourite, setFavourite } = props;
   const [selected, setSelected] = useState(false);
 
   const ClickHandler = () => {
+    setSelected(selected ? false : true)
+
     if (selected) {
-      setSelected(false);
+      setFavourite(prev => prev.filter(photo => photo.id !== props.id));
     } else {
-      setSelected(true);
+      setFavourite(prev => [...prev, { id: props.id }]);
     }
   };
 

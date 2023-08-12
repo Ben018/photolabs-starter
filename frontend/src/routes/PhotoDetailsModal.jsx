@@ -6,14 +6,14 @@ import PhotoList from 'components/PhotoList';
 import PhotoFavButton from 'components/PhotoFavButton';
 
 const PhotoDetailsModal = (props) => {
-  const { setModal, modalPhotoID, photoData, favourite, setFavourite } = props;
+  const { setModal, modalPhotoID, photosData: photosData, favourite, setFavourite } = props;
 
-  const photo = photoData.find((photo) => photo.id === modalPhotoID);
+  const photo = photosData.find((photo) => photo.id === modalPhotoID);
   const similarPhotos = Object.values(photo.similar_photos);
   console.log('Photo =====================>', photo)
   console.log("Similar Photos", similarPhotos);
   console.log(typeof similarPhotos);
-  console.log("Normal Data", photoData);
+  console.log("Normal Data", photosData);
 
   const ClickHandler = () => setModal(false);
 
@@ -23,7 +23,7 @@ const PhotoDetailsModal = (props) => {
         <img src={closeSymbol} alt="close symbol" onClick={ClickHandler} />
       </button>
       <div className="photo-details-modal__images">
-        <PhotoFavButton id={photoData.id} favourite={favourite} setFavourite={setFavourite} />
+        <PhotoFavButton id={photosData.id} favourite={favourite} setFavourite={setFavourite} />
         <img className="photo-details-modal__image" src={photo.urls.full} />
 
         <footer className="photo-details-modal__photographer-details">

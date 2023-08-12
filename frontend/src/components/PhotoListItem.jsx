@@ -5,7 +5,7 @@ import PhotoFavButton from "./PhotoFavButton";
 
 const PhotoListItem = (props) => {
   const { id, location, urls, user } = props.photosData;
-  const { modal, setModal, favourite, setFavourite, modalPhotoID, setModalPhotoID } = props;
+  const { setModal, favourite, setFavourite, setModalPhotoID } = props;
 
   const ClickHandler = () => {
     setModal(true);

@@ -1,23 +1,26 @@
-import React, { useState } from 'react';
+import React from 'react';
 import './App.scss';
 import HomeRoute from 'routes/HomeRoute';
-import photoData from './mocks/photos';
-import topicData from './mocks/topics';
 import PhotoDetailsModal from 'routes/PhotoDetailsModal';
-
-console.log(photoData);
-console.log({ ...photoData });
+import useApplication from 'hooks/useApplicationData';
 
 // Note: Rendering a single component to build components in isolation
 const App = () => {
-  const [modal, setModal] = useState(false);
-  const [modalPhotoID, setModalPhotoID] = useState(null);
-  const [favourite, setFavourite] = useState([]);
+  const {
+    photosData,
+    topicsData,
+    modal,
+    setModal,
+    modalPhotoID,
+    setModalPhotoID,
+    favourite,
+    setFavourite
+  } = useApplication();
 
   return (
     <div className="App">
-      <HomeRoute photosData={photoData} topicsData={topicData} modal={modal} setModal={setModal} modalPhotoID={modalPhotoID} setModalPhotoID={setModalPhotoID} favourite={favourite} setFavourite={setFavourite} />
-      {modal && <PhotoDetailsModal setModal={setModal} photoData={photoData} modalPhotoID={modalPhotoID} favourite={favourite} setFavourite={setFavourite} />}
+      <HomeRoute photosData={photosData} topicsData={topicsData} setModal={setModal} setModalPhotoID={setModalPhotoID} favourite={favourite} setFavourite={setFavourite} />
+      {modal && <PhotoDetailsModal setModal={setModal} photosData={photosData} modalPhotoID={modalPhotoID} favourite={favourite} setFavourite={setFavourite} />}
     </div>
   );
 };

@@ -6,8 +6,8 @@ import TopNavigation from 'components/TopNavigationBar';
 import PhotoList from 'components/PhotoList';
 
 const HomeRoute = (props) => {
-  const { modal, setModal, modalPhotoID, setModalPhotoID } = props;
-  const [favourite, setFavourite] = useState([]);
+  const { modal, setModal, modalPhotoID, setModalPhotoID, favourite, setFavourite } = props;
+
   // console.log("Length of Favourites", favourite.length);
   // console.log("Length of Favourites", favourite);
 

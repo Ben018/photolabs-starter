@@ -3,9 +3,10 @@ import React from 'react';
 import '../styles/PhotoDetailsModal.scss'
 import closeSymbol from '../assets/closeSymbol.svg';
 import PhotoList from 'components/PhotoList';
+import PhotoFavButton from 'components/PhotoFavButton';
 
 const PhotoDetailsModal = (props) => {
-  const { setModal, modalPhotoID, photoData } = props;
+  const { setModal, modalPhotoID, photoData, favourite, setFavourite } = props;
 
   const photo = photoData.find((photo) => photo.id === modalPhotoID);
   const similarPhotos = Object.values(photo.similar_photos);
@@ -22,9 +23,10 @@ const PhotoDetailsModal = (props) => {
         <img src={closeSymbol} alt="close symbol" onClick={ClickHandler} />
       </button>
       <div className="photo-details-modal__images">
+        <PhotoFavButton id={photoData.id} favourite={favourite} setFavourite={setFavourite} />
         <img className="photo-details-modal__image" src={photo.urls.full} />
-        <header className="photo-details-modal--header">Similar Photos</header>
-        <PhotoList photosData={similarPhotos} />
+        <header className="photo-details-modal__header">Similar Photos</header>
+        <PhotoList photosData={similarPhotos} favourite={favourite} setFavourite={setFavourite} />
       </div>
     </div >
   )

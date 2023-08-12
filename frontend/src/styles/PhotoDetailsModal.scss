@@ -46,6 +46,10 @@
 .photo-details-modal__photographer-details {
   display: flex;
   font-size: 16px;
+  padding: 1em;
+  border-bottom: 1px solid #e6e6e6;
+  max-width: 95%;
+  align-content: center;
 }
 
 .photo-details-modal__header {

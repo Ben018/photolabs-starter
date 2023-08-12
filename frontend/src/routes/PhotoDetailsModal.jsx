@@ -25,6 +25,19 @@ const PhotoDetailsModal = (props) => {
       <div className="photo-details-modal__images">
         <PhotoFavButton id={photoData.id} favourite={favourite} setFavourite={setFavourite} />
         <img className="photo-details-modal__image" src={photo.urls.full} />
+
+        <footer className="photo-details-modal__photographer-details">
+          <img className='photo-list__user-profile' src={photo.user.profile} alt='Profile' />
+
+          <div className='photo-list__user-info'>
+            {photo.user.name}
+
+            <div className='photo-list__user-location'>
+              {photo.location.city}, {photo.location.country}
+            </div>
+          </div>
+        </footer>
+
         <header className="photo-details-modal__header">Similar Photos</header>
         <PhotoList photosData={similarPhotos} favourite={favourite} setFavourite={setFavourite} />
       </div>

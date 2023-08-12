@@ -6,15 +6,15 @@ import TopNavigation from 'components/TopNavigationBar';
 import PhotoList from 'components/PhotoList';
 
 const HomeRoute = (props) => {
-  const { modal, setModal, modalPhoto, setModalPhoto } = props;
+  const { modal, setModal, modalPhotoID, setModalPhotoID } = props;
   const [favourite, setFavourite] = useState([]);
-  console.log("Length of Favourites", favourite.length);
-  console.log("Length of Favourites", favourite);
+  // console.log("Length of Favourites", favourite.length);
+  // console.log("Length of Favourites", favourite);
 
   return (
     <div className="home-route">
       <TopNavigation topicsData={props.topicsData} favourite={favourite} />
-      <PhotoList photosData={props.photosData} favourite={favourite} setFavourite={setFavourite} modal={modal} setModal={setModal} modalPhoto={modalPhoto} setModalPhoto={setModalPhoto} />
+      <PhotoList photosData={props.photosData} favourite={favourite} setFavourite={setFavourite} modal={modal} setModal={setModal} modalPhotoID={modalPhotoID} setModalPhotoID={setModalPhotoID} />
     </div>
   );
 };

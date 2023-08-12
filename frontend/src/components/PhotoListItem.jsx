@@ -5,13 +5,11 @@ import PhotoFavButton from "./PhotoFavButton";
 
 const PhotoListItem = (props) => {
   const { id, location, urls, user } = props.photosData;
-  const { modal, setModal, favourite, setFavourite, modalPhoto, setModalPhoto } = props;
+  const { modal, setModal, favourite, setFavourite, modalPhotoID, setModalPhotoID } = props;
 
   const ClickHandler = () => {
     setModal(true);
-    setModalPhoto(id)
-    console.log('Photo ID ===========================>', id);
-    console.log('Photo ID ===========================>', urls.regular);
+    setModalPhotoID(id)
   };
 
   return (

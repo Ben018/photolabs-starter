@@ -10,41 +10,27 @@ const initialState = {
   modalToggle: false,
   modalPhotoID: null,
   photoFavourites: [],
+  favSelected: false,
 };
 
 export const ACTIONS = {
   MODAL_TOGGLE: 'modalToggle',
+  MODAL_CLOSE: 'modalClose',
   SET_FAVOURITES: 'setFavourite',
   FAVOURITE_TOGGLE: 'favouriteToggle',
+  FAVOURITE_UNTOGGLE: 'favouriteUnToggle',
 }
-
-const ClickHandler = () => {
-  setSelected(selected ? false : true)
-
-  if (selected) {
-    setFavourite(prev => prev.filter(photo => photo.id !== props.id));
-  } else {
-    setFavourite(prev => [...prev, { id: props.id }]);
-  }
-};
 
 function reducer(state, action) {
   switch (action.type) {
-    case ACTIONS.MODAL_TOGGLE:
-      return { ...state, modalToggle: action.payload };
-    case ACTIONS.SET_FAVOURITES:
-      return { ...state, photoFavourites: action.payload };
-    case ACTIONS.FAVOURITE_TOGGLE:
-      const { id } = action.payload;
-      if (photoFavourites[id]) {
-        return {
-          ...state, photoFavourites: { ...state.photoFavourites, [id]: !state.photoFavourites[id] }
-        };
-      };
-      return {
-        ...state, photoFavourites: { ...state.photoFavourites, [id]: true }
-      };
-
+    case 'modalToggle':
+      return { ...state, modalToggle: true, modalPhotoID: action.payload };
+    case 'modalClose':
+      return { ...state, modalToggle: false };
+    case 'favouriteToggle':
+      return { ...state, photoFavourites: [...state.photoFavourites, action.payload] };
+    case 'favouriteUnToggle':
+      return { ...state, photoFavourites: state.photoFavourites.filter(Photo => Photo.id !== action.payload.id) };
     default:
       return state;
   }
@@ -53,25 +39,42 @@ function reducer(state, action) {
 const useApplication = () => {
   const [state, dispatch] = useReducer(reducer, initialState);
 
-  const openModal = (photo) => {
-    dispatch({ type: ACTIONS.OPEN_MODAL, payload: photo });
+  const toggleModal = (similarPhotoID) => {
+    dispatch({
+      type: ACTIONS.MODAL_TOGGLE,
+      payload: similarPhotoID
+    });
+    console.log('open modal', similarPhotoID);
   };
 
   const closeModal = () => {
-    dispatch({ type: ACTIONS.CLOSE_MODAL, payload: false });
+    dispatch({
+      type: ACTIONS.MODAL_CLOSE
+    });
     console.log('close modal');
-    console.log(state.modal);
   };
 
-  const favPhotoIds = (id) => {
-    dispatch({ type: ACTIONS.FAVOURITE_TOGGLE, payload: { id } });
+  const toggleFavorite = (photoId) => {
+    if (state.photoFavourites.find(photo => photo.id === photoId)) {
+      dispatch({
+        type: ACTIONS.FAVOURITE_UNTOGGLE,
+        payload: { id: photoId }
+      })
+      console.log('Remove from favourites')
+    } else {
+      dispatch({
+        type: ACTIONS.FAVOURITE_TOGGLE,
+        payload: { id: photoId }
+      })
+      console.log('Add to favourites')
+    }
   };
 
   return {
-    ...state,
-    openModal,
+    toggleModal,
     closeModal,
-    favPhotoIds,
+    toggleFavorite,
+    ...state,
   };
 };
 

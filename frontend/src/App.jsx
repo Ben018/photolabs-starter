@@ -9,16 +9,20 @@ import useApplication from 'hooks/useApplicationData';
 // Note: Rendering a single component to build components in isolation
 const App = () => {
   const {
-    openModal,
+    toggleModal,
     closeModal,
-    favPhotoIds,
+    toggleFavorite,
     ...state
   } = useApplication();
 
+  console.log("app.js", state.modalPhotoID)
+  console.log("app.js faveSelected", state.favSelected)
+  console.log("photoFavourites", state.photoFavourites)
+
   return (
     <div className="App">
-      <HomeRoute {...state} openModal={openModal} closeModal={closeModal} favPhotoIds={favPhotoIds} />
-      {state.modalToggle && <PhotoDetailsModal {...state} photosData={state.photosData} openModal={openModal} closeModal={closeModal} favPhotoIds={favPhotoIds} />}
+      <HomeRoute {...state} toggleModal={toggleModal} closeModal={closeModal} toggleFavorite={toggleFavorite} />
+      {state.modalToggle && <PhotoDetailsModal {...state} photosData={state.photosData} toggleModal={toggleModal} closeModal={closeModal} toggleFavorite={toggleFavorite} />}
     </div>
   );
 };

@@ -4,12 +4,12 @@ import "../styles/PhotoList.scss";
 import PhotoListItem from "./PhotoListItem";
 
 const PhotoList = (props) => {
-  const { openModal, closeModal, favPhotoIds, photosData, ...state } = props;
+  const { toggleModal, toggleFavorite, photosData, ...state } = props;
 
   return (
     <ul className="photo-list">
-      {photosData.map((photoData) => (
-        <PhotoListItem key={photoData.id} {...state} photosData={photoData} openModal={openModal} closeModal={closeModal} favPhotoIds={favPhotoIds} />
+      {photosData.map((photosData) => (
+        <PhotoListItem key={photosData.id} {...state} photosData={photosData} toggleModal={toggleModal} toggleFavorite={toggleFavorite} />
       ))}
     </ul>
   );

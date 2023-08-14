@@ -5,12 +5,12 @@ import TopNavigation from 'components/TopNavigationBar';
 import PhotoList from 'components/PhotoList';
 
 const HomeRoute = (props) => {
-  const { setModal, setModalPhotoID, favourite, setFavourite } = props;
+  const { topicsData, photosData, openModal, closeModal, favPhotoIds, ...state } = props;
 
   return (
     <div className="home-route">
-      <TopNavigation topicsData={props.topicsData} favourite={favourite} />
-      <PhotoList photosData={props.photosData} favourite={favourite} setFavourite={setFavourite} setModal={setModal} setModalPhotoID={setModalPhotoID} />
+      <TopNavigation {...state} topicsData={topicsData} />
+      <PhotoList {...state} photosData={photosData} openModal={openModal} closeModal={closeModal} favPhotoIds={favPhotoIds} />
     </div>
   );
 };

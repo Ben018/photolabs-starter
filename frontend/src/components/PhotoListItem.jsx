@@ -5,17 +5,17 @@ import PhotoFavButton from "./PhotoFavButton";
 
 const PhotoListItem = (props) => {
   const { id, location, urls, user } = props.photosData;
-  const { setModal, favourite, setFavourite, setModalPhotoID } = props;
+  const { openModal, closeModal, ...state } = props; // Removed favPhotoIds from here
 
   const ClickHandler = () => {
-    setModal(true);
-    setModalPhotoID(id)
+    openModal(true);
+    console.log("PhotoListItem ClickHandler", state.modalToggle);
   };
 
   return (
     <div className='photo-list__item'>
-      <PhotoFavButton id={id} favourite={favourite} setFavourite={setFavourite} />
-      <img className='photo-list__image' src={urls.regular} alt='Photo' onClick={ClickHandler} />
+      <PhotoFavButton id={id} {...state} />
+      <img className='photo-list__image' src={urls.regular} alt='Photo' onClick={ClickHandler} /> {/* Use ClickHandler here */}
 
       <footer className='photo-list__user-details'>
         <img className='photo-list__user-profile' src={user.profile} alt='Profile' />

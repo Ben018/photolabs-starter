@@ -1,36 +1,77 @@
-import { useState } from 'react';
+//useApplicationData.js
+
+import { useReducer } from 'react';
 import photoData from '../mocks/photos';
 import topicData from '../mocks/topics';
 
-const useApplication = () => {
-  const photosData = photoData;
-  const topicsData = topicData;
-  const [modal, setModal] = useState(false);
-  const [modalPhotoID, setModalPhotoID] = useState(null);
-  const [favourite, setFavourite] = useState([]);
+const initialState = {
+  photosData: photoData,
+  topicsData: topicData,
+  modalToggle: false,
+  modalPhotoID: null,
+  photoFavourites: [],
+};
 
-  const onClosePhotoDetailsModal = () => {
-    setModal(true);
-    setModalPhotoID(id)
+export const ACTIONS = {
+  MODAL_TOGGLE: 'modalToggle',
+  SET_FAVOURITES: 'setFavourite',
+  FAVOURITE_TOGGLE: 'favouriteToggle',
+}
+
+const ClickHandler = () => {
+  setSelected(selected ? false : true)
+
+  if (selected) {
+    setFavourite(prev => prev.filter(photo => photo.id !== props.id));
+  } else {
+    setFavourite(prev => [...prev, { id: props.id }]);
+  }
+};
+
+function reducer(state, action) {
+  switch (action.type) {
+    case ACTIONS.MODAL_TOGGLE:
+      return { ...state, modalToggle: action.payload };
+    case ACTIONS.SET_FAVOURITES:
+      return { ...state, photoFavourites: action.payload };
+    case ACTIONS.FAVOURITE_TOGGLE:
+      const { id } = action.payload;
+      if (photoFavourites[id]) {
+        return {
+          ...state, photoFavourites: { ...state.photoFavourites, [id]: !state.photoFavourites[id] }
+        };
+      };
+      return {
+        ...state, photoFavourites: { ...state.photoFavourites, [id]: true }
+      };
+
+    default:
+      return state;
+  }
+};
+
+const useApplication = () => {
+  const [state, dispatch] = useReducer(reducer, initialState);
+
+  const openModal = (photo) => {
+    dispatch({ type: ACTIONS.OPEN_MODAL, payload: photo });
   };
 
   const closeModal = () => {
-    setModal(false);
-    console.log("close modal");
-    console.log(modal);
+    dispatch({ type: ACTIONS.CLOSE_MODAL, payload: false });
+    console.log('close modal');
+    console.log(state.modal);
+  };
+
+  const favPhotoIds = (id) => {
+    dispatch({ type: ACTIONS.FAVOURITE_TOGGLE, payload: { id } });
   };
 
   return {
-    photosData,
-    topicsData,
-    modal,
-    setModal,
-    onClosePhotoDetailsModal,
+    ...state,
+    openModal,
     closeModal,
-    modalPhotoID,
-    setModalPhotoID,
-    favourite,
-    setFavourite
+    favPhotoIds,
   };
 };
 

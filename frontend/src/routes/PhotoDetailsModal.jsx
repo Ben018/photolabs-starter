@@ -9,8 +9,8 @@ const PhotoDetailsModal = (props) => {
   const { setModal, modalPhotoID, photosData: photosData, favourite, setFavourite } = props;
 
   const photo = photosData.find((photo) => photo.id === modalPhotoID);
-  const similarPhotos = Object.values(photo.similar_photos);
   console.log('Photo =====================>', photo)
+  const similarPhotos = Object.values(photo.similar_photos);
   console.log("Similar Photos", similarPhotos);
   console.log(typeof similarPhotos);
   console.log("Normal Data", photosData);

@@ -34,7 +34,6 @@ const useApplication = () => {
   };
 };
 
-
 export default useApplication;
 
 // Separation of Concerns

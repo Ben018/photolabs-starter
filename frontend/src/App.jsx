@@ -21,7 +21,7 @@ const App = () => {
 
   return (
     <div className="App">
-      <HomeRoute {...state} toggleModal={toggleModal} closeModal={closeModal} toggleFavorite={toggleFavorite} />
+      <HomeRoute {...state} photosData={state.photosData} toggleModal={toggleModal} closeModal={closeModal} toggleFavorite={toggleFavorite} />
       {state.modalToggle && <PhotoDetailsModal {...state} photosData={state.photosData} toggleModal={toggleModal} closeModal={closeModal} toggleFavorite={toggleFavorite} />}
     </div>
   );

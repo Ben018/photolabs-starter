@@ -1,24 +1,27 @@
 //useApplicationData.js
 
-import { useReducer } from 'react';
-import photoData from '../mocks/photos';
-import topicData from '../mocks/topics';
+import { useReducer, useEffect } from 'react';
+import axios from 'axios';
+// import photoData from '../mocks/photos';
+// import topicData from '../mocks/topics';
 
 const initialState = {
-  photosData: photoData,
-  topicsData: topicData,
+  photosData: [],
+  topicsData: [],
   modalToggle: false,
   modalPhotoID: null,
   photoFavourites: [],
   favSelected: false,
 };
 
-export const ACTIONS = {
+const ACTIONS = {
   MODAL_TOGGLE: 'modalToggle',
   MODAL_CLOSE: 'modalClose',
   SET_FAVOURITES: 'setFavourite',
   FAVOURITE_TOGGLE: 'favouriteToggle',
   FAVOURITE_UNTOGGLE: 'favouriteUnToggle',
+  SET_PHOTO_DATA: 'fetchPhotoData',
+  SET_TOPIC_DATA: 'fetchTopicData',
 }
 
 function reducer(state, action) {
@@ -31,6 +34,10 @@ function reducer(state, action) {
       return { ...state, photoFavourites: [...state.photoFavourites, action.payload] };
     case 'favouriteUnToggle':
       return { ...state, photoFavourites: state.photoFavourites.filter(Photo => Photo.id !== action.payload.id) };
+    case 'fetchPhotoData':
+      return { ...state, photosData: action.payload };
+    case 'fetchTopicData':
+      return { ...state, topicsData: action.payload };
     default:
       return state;
   }
@@ -69,6 +76,28 @@ const useApplication = () => {
       console.log('Add to favourites')
     }
   };
+
+  useEffect(() => {
+    axios.get('http://localhost:8001/api/photos')
+      .then((response) => {
+        console.log("dataFetching", response.data);
+        dispatch({
+          type: ACTIONS.SET_PHOTO_DATA,
+          payload: response.data
+        });
+      });
+  }, []);
+
+  useEffect(() => {
+    axios.get('http://localhost:8001/api/topics')
+      .then((response) => {
+        console.log("dataFetching", response.data);
+        dispatch({
+          type: ACTIONS.SET_TOPIC_DATA,
+          payload: response.data
+        });
+      });
+  }, []);
 
   return {
     toggleModal,

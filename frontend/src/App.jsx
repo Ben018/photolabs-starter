@@ -12,16 +12,13 @@ const App = () => {
     toggleModal,
     closeModal,
     toggleFavorite,
+    fetchPhotosByTopic,
     ...state
   } = useApplication();
 
-  console.log("app.js", state.modalPhotoID)
-  console.log("app.js faveSelected", state.favSelected)
-  console.log("photoFavourites", state.photoFavourites)
-
   return (
     <div className="App">
-      <HomeRoute {...state} photosData={state.photosData} toggleModal={toggleModal} closeModal={closeModal} toggleFavorite={toggleFavorite} />
+      <HomeRoute {...state} photosData={state.photosData} toggleModal={toggleModal} closeModal={closeModal} toggleFavorite={toggleFavorite} fetchPhotosByTopic={fetchPhotosByTopic} />
       {state.modalToggle && <PhotoDetailsModal {...state} photosData={state.photosData} toggleModal={toggleModal} closeModal={closeModal} toggleFavorite={toggleFavorite} />}
     </div>
   );

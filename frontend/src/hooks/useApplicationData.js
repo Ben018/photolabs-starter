@@ -2,8 +2,6 @@
 
 import { useReducer, useEffect } from 'react';
 import axios from 'axios';
-// import photoData from '../mocks/photos';
-// import topicData from '../mocks/topics';
 
 const initialState = {
   photosData: [],
@@ -22,6 +20,7 @@ const ACTIONS = {
   FAVOURITE_UNTOGGLE: 'favouriteUnToggle',
   SET_PHOTO_DATA: 'fetchPhotoData',
   SET_TOPIC_DATA: 'fetchTopicData',
+  SET_PHOTO_BY_TOPIC: 'fetchPhotoByTopic',
 }
 
 function reducer(state, action) {
@@ -38,6 +37,8 @@ function reducer(state, action) {
       return { ...state, photosData: action.payload };
     case 'fetchTopicData':
       return { ...state, topicsData: action.payload };
+    case 'fetchPhotoByTopic':
+      return { ...state, photosData: action.payload };
     default:
       return state;
   }
@@ -77,10 +78,22 @@ const useApplication = () => {
     }
   };
 
+  // fetch photos from API based on topic
+  const fetchPhotosByTopic = (topicId) => {
+    axios.get(`http://localhost:8001/api/topics/photos/${topicId}`)
+      .then((response) => {
+        dispatch({
+          type: ACTIONS.SET_PHOTO_BY_TOPIC,
+          payload: response.data
+        });
+        console.log("dataFetching", response.data);
+      });
+  };
+
+  // fetch photos from API
   useEffect(() => {
     axios.get('http://localhost:8001/api/photos')
       .then((response) => {
-        console.log("dataFetching", response.data);
         dispatch({
           type: ACTIONS.SET_PHOTO_DATA,
           payload: response.data
@@ -88,10 +101,10 @@ const useApplication = () => {
       });
   }, []);
 
+  // fetch topics from API
   useEffect(() => {
     axios.get('http://localhost:8001/api/topics')
       .then((response) => {
-        console.log("dataFetching", response.data);
         dispatch({
           type: ACTIONS.SET_TOPIC_DATA,
           payload: response.data
@@ -103,6 +116,7 @@ const useApplication = () => {
     toggleModal,
     closeModal,
     toggleFavorite,
+    fetchPhotosByTopic,
     ...state,
   };
 };

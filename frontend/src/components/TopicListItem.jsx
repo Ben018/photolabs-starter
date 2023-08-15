@@ -1,16 +1,15 @@
 import React from "react";
-
 import "../styles/TopicListItem.scss";
 
-const sampleDataForTopicListItem = {
-  id: "1",
-  slug: "topic-1",
-  label: "Nature",
-};
-
 const TopicListItem = (props) => {
+  const { fetchPhotosByTopic } = props;
+
+  const clickHandler = () => {
+    fetchPhotosByTopic(props.id)
+  };
+
   return (
-    <div className="topic-list__item">
+    <div className="topic-list__item" onClick={clickHandler}>
       <span>
         {props.title}
       </span>

@@ -2,6 +2,7 @@
   "name": "server",
   "version": "1.0.0",
   "description": "",
+  "proxy": "http://localhost:8001",
   "main": "src/index.js",
   "scripts": {
     "start": "node ./src/index.js",

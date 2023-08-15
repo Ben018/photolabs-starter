@@ -1,17 +1,12 @@
-import React, { useState } from 'react';
-
+import React from 'react';
 import FavIcon from './FavIcon';
 import '../styles/PhotoFavButton.scss';
 
 function PhotoFavButton(props) {
-  const { favourite, photoFavourites, setFavourite, toggleFavorite, ...state } = props; // Use setFavourite to update state
-  const [selected, setSelected] = useState(false);
+  const { favourite, photoFavourites, setFavourite, toggleFavorite, ...state } = props;
 
   const ClickHandler = () => {
     toggleFavorite(state.id);
-    console.log('toggleFavorite', state.id);
-    console.log('photoFavourites', photoFavourites);
-    console.log('Photo Includes', photoFavourites.includes(state.id));
   };
 
   return (
@@ -21,6 +16,6 @@ function PhotoFavButton(props) {
       </div>
     </div>
   );
-}
+};
 
 export default PhotoFavButton;

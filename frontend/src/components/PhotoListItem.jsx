@@ -1,15 +1,12 @@
 import React from "react";
-
 import "../styles/PhotoListItem.scss";
 import PhotoFavButton from "./PhotoFavButton";
 
 const PhotoListItem = (props) => {
-  const { id, location, urls, user } = props.photosData;
   const { photoData, toggleModal, toggleFavorite, ...state } = props;
 
   const clickHandler = () => {
     toggleModal(state.photosData.id);
-    console.log("toggleModal", state.photosData.id);
   };
 
   return (

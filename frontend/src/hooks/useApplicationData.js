@@ -1,5 +1,3 @@
-//useApplicationData.js
-
 import { useReducer, useEffect } from 'react';
 import axios from 'axios';
 
@@ -21,23 +19,23 @@ const ACTIONS = {
   SET_PHOTO_DATA: 'fetchPhotoData',
   SET_TOPIC_DATA: 'fetchTopicData',
   SET_PHOTO_BY_TOPIC: 'fetchPhotoByTopic',
-}
+};
 
 function reducer(state, action) {
   switch (action.type) {
-    case 'modalToggle':
+    case ACTIONS.MODAL_TOGGLE:
       return { ...state, modalToggle: true, modalPhotoID: action.payload };
-    case 'modalClose':
+    case ACTIONS.MODAL_CLOSE:
       return { ...state, modalToggle: false };
-    case 'favouriteToggle':
+    case ACTIONS.FAVOURITE_TOGGLE:
       return { ...state, photoFavourites: [...state.photoFavourites, action.payload] };
-    case 'favouriteUnToggle':
-      return { ...state, photoFavourites: state.photoFavourites.filter(Photo => Photo.id !== action.payload.id) };
-    case 'fetchPhotoData':
+    case ACTIONS.FAVOURITE_UNTOGGLE:
+      return { ...state, photoFavourites: state.photoFavourites.filter(photo => photo.id !== action.payload.id), };
+    case ACTIONS.SET_PHOTO_DATA:
       return { ...state, photosData: action.payload };
-    case 'fetchTopicData':
+    case ACTIONS.SET_TOPIC_DATA:
       return { ...state, topicsData: action.payload };
-    case 'fetchPhotoByTopic':
+    case ACTIONS.SET_PHOTO_BY_TOPIC:
       return { ...state, photosData: action.payload };
     default:
       return state;
@@ -47,46 +45,44 @@ function reducer(state, action) {
 const useApplication = () => {
   const [state, dispatch] = useReducer(reducer, initialState);
 
-  const toggleModal = (similarPhotoID) => {
+  // Toggle modal open
+  const toggleModal = similarPhotoID => {
     dispatch({
       type: ACTIONS.MODAL_TOGGLE,
-      payload: similarPhotoID
+      payload: similarPhotoID,
     });
-    console.log('open modal', similarPhotoID);
   };
 
+  // Toggle modal close
   const closeModal = () => {
     dispatch({
-      type: ACTIONS.MODAL_CLOSE
+      type: ACTIONS.MODAL_CLOSE,
     });
-    console.log('close modal');
   };
 
-  const toggleFavorite = (photoId) => {
+  // Toggle favourite
+  const toggleFavorite = photoId => {
     if (state.photoFavourites.find(photo => photo.id === photoId)) {
       dispatch({
         type: ACTIONS.FAVOURITE_UNTOGGLE,
-        payload: { id: photoId }
-      })
-      console.log('Remove from favourites')
+        payload: { id: photoId },
+      });
     } else {
       dispatch({
         type: ACTIONS.FAVOURITE_TOGGLE,
-        payload: { id: photoId }
-      })
-      console.log('Add to favourites')
+        payload: { id: photoId },
+      });
     }
   };
 
-  // fetch photos from API based on topic
-  const fetchPhotosByTopic = (topicId) => {
+  // Fetch photos from API based on topic
+  const fetchPhotosByTopic = topicId => {
     axios.get(`http://localhost:8001/api/topics/photos/${topicId}`)
-      .then((response) => {
+      .then(response => {
         dispatch({
           type: ACTIONS.SET_PHOTO_BY_TOPIC,
-          payload: response.data
+          payload: response.data,
         });
-        console.log("dataFetching", response.data);
       });
   };
 
@@ -96,7 +92,7 @@ const useApplication = () => {
       .then((response) => {
         dispatch({
           type: ACTIONS.SET_PHOTO_DATA,
-          payload: response.data
+          payload: response.data,
         });
       });
   }, []);
@@ -107,7 +103,7 @@ const useApplication = () => {
       .then((response) => {
         dispatch({
           type: ACTIONS.SET_TOPIC_DATA,
-          payload: response.data
+          payload: response.data,
         });
       });
   }, []);
@@ -122,11 +118,3 @@ const useApplication = () => {
 };
 
 export default useApplication;
-
-// Separation of Concerns
-// Our useApplicationData Hook will return an object with four keys representing the following items:
-
-// The state object will contain the entire state of the application.
-// The updateToFavPhotoIds action can be used to set the favourite photos.
-// The setPhotoSelected action can be used when the user selects a photo.
-// The onClosePhotoDetailsModal action can be used to close the modal.
